@@ -78,7 +78,9 @@ async def upload_leaf(
 
         # build image url if exists
         if "segmented_image" in result:
-            result["image_url"] = f"/temp/uploads/{sample_id}/{result['segmented_image']}"
+            result["segmented_url"] = f"/temp/uploads/{sample_id}/{result['segmented_image']}"
+        if "exg_image" in result:
+            result["exg_url"] = f"/temp/uploads/{sample_id}/{result['exg_image']}"
 
         return templates.TemplateResponse(
             "index.html",

@@ -8,8 +8,9 @@ from image_pipeline.segmentation import (
     extract_main_leaf_center_first,
     apply_mask
 )
-from image_pipeline.green_indices import compute_exg_gli
+from image_pipeline.green_indices import compute_exg_gli, compute_exg_map
 from image_pipeline.scoring import compute_visual_score
+
 import logging
 logger = logging.getLogger("image-pipeline")
 
@@ -40,6 +41,7 @@ def process_leaf_image(
 
     # 4) indices
     indices = compute_exg_gli(leaf_only, mask_leaf)
+    exg_map = compute_exg_map(leaf_only, mask_leaf)
 
     # 5) scoring
     score = compute_visual_score(indices)
@@ -56,11 +58,20 @@ def process_leaf_image(
         out = Path(output_dir)
         out.mkdir(parents=True, exist_ok=True)
 
+        # segmented image
         seg_path = out / "leaf_segmented.png"
         cv2.imwrite(
             str(seg_path),
             cv2.cvtColor(leaf_only, cv2.COLOR_RGB2BGR)
         )
+
+        # ExG map
+        exg_path = out / "exg_map.png"
+        cv2.imwrite(
+            str(exg_path),
+            exg_map
+        )
         result["segmented_image"] = seg_path.name
+        result["exg_image"] = exg_path.name
 
     return result

@@ -30,8 +30,17 @@
         <p><strong>GLI:</strong> {{ result.gli }}</p>
         <p><strong>Status:</strong> {{ result.label }}</p>
 
-        <h3>Hasil Segmentasi Daun</h3>
-        <img src="{{ result.image_url }}" alt="Leaf Segmentation" class="result-img">
+        <div class="image-grid">
+            <div>
+                <h4>Segmentasi Daun</h4>
+                <img src="{{ result.segmented_url }}" class="result-img">
+            </div>
+
+            <div>
+                <h4>Excess Green Map</h4>
+                <img src="{{ result.exg_url }}" class="result-img">
+            </div>
+        </div>
 
         <p class="note">
             ⚠️ Hasil ini merupakan estimasi visual dan perlu validasi laboratorium.

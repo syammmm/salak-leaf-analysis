@@ -59,3 +59,16 @@ button {
     border-radius: 6px;
     font-size: 0.9em;
 }
+
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+@media (min-width: 768px) {
+    .image-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
