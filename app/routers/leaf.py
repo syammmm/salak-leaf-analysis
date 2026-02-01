@@ -81,6 +81,16 @@ async def upload_leaf(
             result["segmented_url"] = f"/temp/uploads/{sample_id}/{result['segmented_image']}"
         if "exg_image" in result:
             result["exg_url"] = f"/temp/uploads/{sample_id}/{result['exg_image']}"
+        if "gli_image" in result:
+            result["gli_url"] = f"/temp/uploads/{sample_id}/{result['gli_image']}"
+        if "hist_exg" in result:
+            result["hist_exg_url"] = f"/temp/uploads/{sample_id}/{result['hist_exg']}"
+        if "hist_gli" in result:
+            result["hist_gli_url"] = f"/temp/uploads/{sample_id}/{result['hist_gli']}"
+        if "exg_overlay" in result: 
+            result["exg_overlay_url"] = f"/temp/uploads/{sample_id}/{result['exg_overlay']}"
+        if "gli_overlay" in result:
+            result["gli_overlay_url"] = f"/temp/uploads/{sample_id}/{result['gli_overlay']}"
 
         return templates.TemplateResponse(
             "index.html",

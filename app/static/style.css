@@ -64,11 +64,79 @@ button {
     display: grid;
     grid-template-columns: 1fr;
     gap: 16px;
-    margin-top: 16px;
 }
 
 @media (min-width: 768px) {
     .image-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
     }
 }
+
+.histogram-section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.histogram-item {
+    width: 100%;
+}
+
+.histogram-item h4 {
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.histogram-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb; /* abu soft */
+    background: #ffffff;
+}
+.histogram-img {
+    max-height: 300px;
+    object-fit: contain;
+}
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 16px;
+}
+
+.zonal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.zonal-table th,
+.zonal-table td {
+    border: 1px solid #e5e7eb;
+    padding: 8px 10px;
+    text-align: center;
+}
+
+.zonal-table thead th {
+    background-color: #f9fafb;
+    font-weight: 600;
+}
+
+.zone-name {
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.zonal-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+.zonal-table td {
+    white-space: nowrap;
+}
+.zonal-table tbody tr:last-child {
+    background-color: #fff7ed;
+}
+
+

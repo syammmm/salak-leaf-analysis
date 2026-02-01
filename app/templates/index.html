@@ -9,7 +9,7 @@
 <body>
 
 <div class="container">
-    <h1>🌿 Salak Leaf Analysis</h1>
+    <h1>Salak Leaf Analysis</h1>
 
     <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="image" accept="image/*" required>
@@ -40,11 +40,104 @@
                 <h4>Excess Green Map</h4>
                 <img src="{{ result.exg_url }}" class="result-img">
             </div>
+
+            <div>
+                <h4>Green Leaf Index Map</h4>
+                <img src="{{ result.gli_url }}" class="result-img">
+            </div>
+        </div>
+
+        {% if result.hist_exg_url or result.hist_gli_url %}
+        <h3 class="section-title">Distribusi Nilai Indeks</h3>
+
+        <div class="histogram-section">
+            {% if result.hist_exg_url %}
+            <div class="histogram-item">
+                <h4>Histogram Excess Green (ExG)</h4>
+                <img src="{{ result.hist_exg_url }}" class="histogram-img">
+            </div>
+            {% endif %}
+
+            {% if result.hist_gli_url %}
+            <div class="histogram-item">
+                <h4>Histogram Green Leaf Index (GLI)</h4>
+                <img src="{{ result.hist_gli_url }}" class="histogram-img">
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <h3 class="section-title">Overlay pada Citra Asli</h3>
+
+        <div class="image-grid">
+            <div>
+                <h4>ExG Overlay</h4>
+                <img src="{{ result.exg_overlay_url }}" class="result-img">
+            </div>
+
+            <div>
+                <h4>GLI Overlay</h4>
+                <img src="{{ result.gli_overlay_url }}" class="result-img">
+            </div>
         </div>
 
         <p class="note">
-            ⚠️ Hasil ini merupakan estimasi visual dan perlu validasi laboratorium.
+            Hasil ini merupakan estimasi visual dan perlu validasi laboratorium.
         </p>
+        
+        {% if result.zonal_stats %}
+        <h3 class="section-title">Zonal Statistics (Center – Ring – Edge)</h3>
+
+        <div class="table-wrapper">
+        <table class="zonal-table">
+            <thead>
+                <tr>
+                    <th rowspan="2">Zona</th>
+                    <th colspan="5">Excess Green (ExG)</th>
+                    <th colspan="5">Green Leaf Index (GLI)</th>
+                </tr>
+                <tr>
+                    <th>Mean</th>
+                    <th>Std</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>n</th>
+
+                    <th>Mean</th>
+                    <th>Std</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>n</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for zone, stats in result.zonal_stats.items() %}
+                <tr>
+                    <td class="zone-name">{{ zone|capitalize }}</td>
+
+                    <td>{{ "%.2f"|format(stats.ExG.mean) }}</td>
+                    <td>{{ "%.2f"|format(stats.ExG.std) }}</td>
+                    <td>{{ "%.2f"|format(stats.ExG.min) }}</td>
+                    <td>{{ "%.2f"|format(stats.ExG.max) }}</td>
+                    <td>{{ stats.ExG.n_pixel }}</td>
+
+                    <td>{{ "%.3f"|format(stats.GLI.mean) }}</td>
+                    <td>{{ "%.3f"|format(stats.GLI.std) }}</td>
+                    <td>{{ "%.3f"|format(stats.GLI.min) }}</td>
+                    <td>{{ "%.3f"|format(stats.GLI.max) }}</td>
+                    <td>{{ stats.GLI.n_pixel }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+
+        <p class="note">
+            Zona ditentukan secara geometris berdasarkan jarak relatif dari pusat daun.
+        </p>
+        {% endif %}
+
     </div>
     {% endif %}
 </div>
